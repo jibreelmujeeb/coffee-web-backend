@@ -8,6 +8,8 @@ const bookingSchema = mongoose.Schema({
     bookingType:String,
     numberOfPeople:String,
     comment:String,
+    status:String,
+    ref: String,
     delivered:{type:Boolean, default:false}
 })
 

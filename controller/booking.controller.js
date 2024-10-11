@@ -1,8 +1,14 @@
+const paystack = require('paystack-api')(process.env.PAYSTACK_SECRETKEY);
 
 const bookingDB = require('../modal/booking.modal')
-const booking=(req, res)=>{
+const booking= async(req, res)=>{
     console.log(req.body)
-    const newBooking = new bookingDB(req.body)
+    const response = await paystack.transaction.initialize({
+        email: req.body.email,
+        amount: req.body.amount * 100, // Paystack accepts amounts in kobo (Naira's subunit)
+      });
+
+    const newBooking = new bookingDB({...req.body, status: 'success', ref: response.data.reference});
 
     // bookingDB.findOne(email).then((booked)=>{
     //     if(booked.delivered==false){
@@ -13,7 +19,11 @@ const booking=(req, res)=>{
     // })
     newBooking.save().then(result=>{
         if(result){
-            res.status(201).json({msg: "Coffee booked successfully", booking: result, status:true})
+            res.status(201).json({
+                msg: "Coffee booked successfully", 
+                booking: result, status:true, 
+                authorization_url: response.data.authorization_url,
+            })
         }
     }).catch(err=>{
         console.log(err, "Cannot book coffee");
