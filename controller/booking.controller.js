@@ -3,14 +3,17 @@ const paystack = require('paystack-api')(process.env.PAYSTACK_SECRETKEY);
 const bookingDB = require('../modal/booking.modal')
 const booking= async(req, res)=>{
     console.log(req.body)
-    const response = await paystack.transaction.initialize({
-        email: req.body.email,
-        amount: req.body.amount * 100, // Paystack accepts amounts in kobo (Naira's subunit)
-        callback_url: 'http://localhost:5173/reservehttp://localhost:5173/home', // Replace with your callback URL
-      });
+    let response;
+    if(req.body.paymentType == true) {
+        response = await paystack.transaction.initialize({
+            email: req.body.email,
+            amount: req.body.amount * 100, // Paystack accepts amounts in kobo (Naira's subunit)
+            callback_url: 'http://localhost:5173/home', // Replace with your callback URL
+          });
+    }
       
 
-    const newBooking = new bookingDB({...req.body, status: 'success', ref: response.data.reference});
+    const newBooking = new bookingDB({...req.body, status: 'success', ref: req.body.paymentType == true ? response.data.reference : ''});
     
     // bookingDB.findOne(email).then((booked)=>{
     //     if(booked.delivered==false){
@@ -24,7 +27,7 @@ const booking= async(req, res)=>{
             res.status(201).json({
                 msg: "Coffee booked successfully", 
                 booking: result, status:true, 
-                authorization_url: response.data.authorization_url,
+                authorization_url: req.body.paymentType == true ? response.data.authorization_url : null,
             })
         }
     }).catch(err=>{
