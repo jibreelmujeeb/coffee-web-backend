@@ -59,8 +59,8 @@ const adForgotPassword = async (req, res) => {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Password Reset",
-    text: `You requested a password reset. Click the link to reset your password: http://localhost:5173/admin/reset-password/${token}`,
-    html: `<p>You requested a password reset.</p><p>Click the link below to reset your password:</p><a href="http://localhost:5173/admin/reset-password/${token}">Reset Password</a>`,
+    text: `You requested a password reset. Click the link to reset your password: https://coffee-web-theta.vercel.app/admin/reset-password/${token}`,
+    html: `<p>You requested a password reset.</p><p>Click the link below to reset your password:</p><a href="https://coffee-web-theta.vercel.app/admin/reset-password/${token}">Reset Password</a>`,
   };
   transporter.sendMail(mailOptions);
 
@@ -96,7 +96,7 @@ const verifyTokenForgotPassword = (req, res) => {
       });
      
     });
-  res.redirect("http://localhost:5173/admin/Reset-Password/");
+  res.redirect("https://coffee-web-theta.vercel.app/admin/Reset-Password/");
 };
 
 const login = (req, res) => {
