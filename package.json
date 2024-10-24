@@ -1,4 +1,12 @@
 {
+  "name": "backend work",
+  "version": "1.0.0",
+  "description": "Backend work for Level 3 project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1", "start": "node index.js"
+  },
   "dependencies": {
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
