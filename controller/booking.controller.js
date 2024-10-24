@@ -8,7 +8,7 @@ const booking= async(req, res)=>{
         response = await paystack.transaction.initialize({
             email: req.body.email,
             amount: req.body.amount * 100, // Paystack accepts amounts in kobo (Naira's subunit)
-            callback_url: 'https://coffee-web-theta.vercel.app/home', // Replace with your callback URL
+            callback_url: 'https://coffee-web-theta.vercel.app/history', // Replace with your callback URL
           });
     }
       
