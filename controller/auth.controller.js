@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRETKEY;
 
-// User registration
+
 const signUp = async (req, res) => {
   const { fullname, email, password } = req.body;
 
@@ -25,7 +25,7 @@ const signUp = async (req, res) => {
   }
 };
 
-// User login
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -48,7 +48,7 @@ const login = async (req, res) => {
   }
 };
 
-// Forgot password
+
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -91,7 +91,7 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// Reset password
+
 const resetPassword = async (req, res) => {
   const token = req.query.token;
   const { newPassword } = req.body;
@@ -118,7 +118,7 @@ const resetPassword = async (req, res) => {
   }
 };
 
-// Verify token middleware
+
 const verifyToken = (req, res) => {
   const token = req.query.token;  
 
